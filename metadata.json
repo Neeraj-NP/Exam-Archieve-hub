@@ -1,0 +1,5 @@
+{
+  "name": "Exam Archive Hub",
+  "description": "A responsive academic website where students can easily find and submit previous year exam papers (PYQs). Features include searching, filtering, and submitting papers in a clean, modern interface.",
+  "requestFramePermissions": []
+}
