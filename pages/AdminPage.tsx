@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { usePapers } from '../PaperContext';
 import { CheckIcon, XIcon, InboxIcon, DocumentTextIcon, CalendarIcon, BookmarkIcon, PencilIcon, TrashIcon, RefreshIcon, EyeIcon, UserIcon } from '../components/icons/Icons';
 import { ExamPaper } from '../types';
-import { YEARS, SEMESTERS, EXAM_TYPES, SEMESTER_SUBJECTS } from '../constants';
+import { YEARS, SEMESTERS, EXAM_TYPES } from '../constants';
 
 type AdminTab = 'pending' | 'published' | 'rejected';
 
@@ -141,7 +140,7 @@ const AdminPage: React.FC = () => {
                   {pendingPapers.map(paper => (
                     <PaperListItem key={paper.id} paper={paper} actions={
                         <>
-                            <a href={paper.url} target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none w-full justify-center px-4 py-2 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-100 flex items-center gap-2"><EyeIcon className="w-5 h-5" /> View</a>
+                            <a href={paper.fileContent || paper.url} target="_blank" rel="noopener noreferrer" className="flex-1 sm:flex-none w-full justify-center px-4 py-2 border border-slate-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-100 flex items-center gap-2"><EyeIcon className="w-5 h-5" /> View</a>
                             <button onClick={() => approvePaper(paper.id)} className="flex-1 sm:flex-none w-full justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 flex items-center gap-2"><CheckIcon className="w-5 h-5" /> Approve</button>
                             <button onClick={() => rejectPaper(paper.id)} className="flex-1 sm:flex-none w-full justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 flex items-center gap-2"><XIcon className="w-5 h-5" /> Reject</button>
                         </>
