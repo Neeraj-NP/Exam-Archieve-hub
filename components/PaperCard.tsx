@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExamPaper } from '../types';
-import { DocumentTextIcon, CalendarIcon, EyeIcon, DownloadIcon, EyeIcon as ViewIcon, BookmarkIcon } from './icons/Icons';
+import { DocumentTextIcon, CalendarIcon, EyeIcon, DownloadIcon, EyeIcon as ViewIcon, BookmarkIcon, UserIcon } from './icons/Icons';
 
 interface PaperCardProps {
   paper: ExamPaper;
@@ -15,7 +15,7 @@ export const PaperCard: React.FC<PaperCardProps> = ({ paper }) => {
             {paper.subject}
         </div>
         <h3 className="block mt-2 text-xl leading-tight font-bold text-slate-900 hover:underline">{paper.title}</h3>
-        <div className="mt-4 flex items-center text-slate-500 text-sm space-x-4">
+        <div className="mt-4 flex flex-wrap items-center text-slate-500 text-sm gap-x-4 gap-y-2">
             <div className="flex items-center gap-1.5">
                 <CalendarIcon className="w-4 h-4" />
                 <span>{paper.year}</span>
@@ -28,6 +28,12 @@ export const PaperCard: React.FC<PaperCardProps> = ({ paper }) => {
                 <EyeIcon className="w-4 h-4" />
                 <span>{paper.views.toLocaleString()} views</span>
             </div>
+            {paper.submittedBy && (
+              <div className="flex items-center gap-1.5" title={`Submitted by ${paper.submittedBy}`}>
+                <UserIcon className="w-4 h-4" />
+                <span className="truncate max-w-[120px]">{paper.submittedBy}</span>
+              </div>
+            )}
         </div>
       </div>
       <div className="p-6 bg-slate-50/70 flex items-center justify-between gap-3">

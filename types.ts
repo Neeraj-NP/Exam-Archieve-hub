@@ -8,4 +8,11 @@ export interface ExamPaper {
   url: string;
   views: number;
   submittedAt: Date;
+  submittedBy?: string;
+}
+
+export interface User {
+  id: number;
+  email: string;
+  role: 'student' | 'admin';
 }

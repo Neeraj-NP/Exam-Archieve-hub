@@ -1,13 +1,16 @@
+
 import React, { useState, useEffect } from 'react';
 import { SEMESTER_SUBJECTS, YEARS, EXAM_TYPES, SEMESTERS } from '../constants';
 import { UploadIcon, CheckCircleIcon, PaperAirplaneIcon } from '../components/icons/Icons';
 import { usePapers } from '../PaperContext';
+import { useAuth } from '../AuthContext';
 
 type SubmissionStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 const SubmitPaperPage: React.FC = () => {
   const { submitPaper } = usePapers();
-  const [name, setName] = useState('');
+  const { currentUser } = useAuth();
+  
   const [subject, setSubject] = useState('');
   const [year, setYear] = useState<string>(YEARS[0].toString());
   const [semester, setSemester] = useState<string>('1');
@@ -31,9 +34,9 @@ const SubmitPaperPage: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
-      const allowedTypes = ['application/pdf', 'image/jpeg'];
+      const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png'];
       if (!allowedTypes.includes(selectedFile.type)) {
-        setError('Invalid file type. Please upload a PDF or JPG file.');
+        setError('Invalid file type. Please upload a PDF, JPG, or PNG file.');
         setFile(null);
         return;
       }
@@ -49,7 +52,7 @@ const SubmitPaperPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!subject || !year || !file || !examType || !semester) {
+    if (!subject || !year || !file || !examType || !semester || !currentUser) {
       setError('Please fill out all required fields.');
       return;
     }
@@ -62,6 +65,7 @@ const SubmitPaperPage: React.FC = () => {
       examType,
       semester: parseInt(semester, 10),
       file,
+      submittedBy: currentUser.email,
     });
 
     // Simulate API call
@@ -71,7 +75,6 @@ const SubmitPaperPage: React.FC = () => {
   };
   
   const resetForm = () => {
-    setName('');
     setSubject('');
     setYear(YEARS[0].toString());
     setSemester('1');
@@ -108,9 +111,9 @@ const SubmitPaperPage: React.FC = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6 bg-slate-50 p-8 rounded-xl border border-slate-200">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-slate-700">Name (Optional)</label>
-            <input type="text" id="name" value={name} onChange={e => setName(e.target.value)} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" />
+           <div>
+            <label htmlFor="submitter" className="block text-sm font-medium text-slate-700">Submitting as</label>
+            <input type="text" id="submitter" value={currentUser?.email || ''} readOnly className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm bg-slate-100 text-slate-500 cursor-not-allowed" />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -146,25 +149,25 @@ const SubmitPaperPage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700">Upload Paper (PDF/JPG, max 5MB)*</label>
+            <label className="block text-sm font-medium text-slate-700">Upload Paper (PDF/JPG/PNG, max 5MB)*</label>
             <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 border-dashed rounded-md">
               <div className="space-y-1 text-center">
                 <UploadIcon className="mx-auto h-12 w-12 text-slate-400" />
                 <div className="flex text-sm text-slate-600">
                   <label htmlFor="file-upload" className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                     <span>{file ? 'Change file' : 'Upload a file'}</span>
-                    <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept=".pdf,.jpg,.jpeg" />
+                    <input id="file-upload" name="file-upload" type="file" className="sr-only" onChange={handleFileChange} accept=".pdf,.jpg,.jpeg,.png" />
                   </label>
                   <p className="pl-1">{!file && 'or drag and drop'}</p>
                 </div>
-                <p className="text-xs text-slate-500">{file ? file.name : 'PDF, JPG up to 5MB'}</p>
+                <p className="text-xs text-slate-500">{file ? file.name : 'PDF, JPG, PNG up to 5MB'}</p>
               </div>
             </div>
           </div>
           
            <div>
-            <label htmlFor="notes" className="block text-sm font-medium text-slate-700">Notes</label>
-            <textarea id="notes" value={notes} onChange={e => setNotes(e.target.value)} rows={3} className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+            <label htmlFor="notes" className="block text-sm font-medium text-slate-700">Notes (Optional)</label>
+            <textarea id="notes" value={notes} onChange={e => setNotes(e.target.value)} rows={3} placeholder="Any additional notes for the reviewer..." className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
           </div>
 
           {error && <p className="text-sm text-red-600">{error}</p>}

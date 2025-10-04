@@ -61,6 +61,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1250,
     submittedAt: new Date('2023-10-15'),
+    submittedBy: 'student1@example.com',
   },
   {
     id: 2,
@@ -72,6 +73,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 2800,
     submittedAt: new Date('2024-01-10'),
+    submittedBy: 'student2@example.com',
   },
   {
     id: 3,
@@ -83,6 +85,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 980,
     submittedAt: new Date('2022-12-20'),
+    submittedBy: 'student3@example.com',
   },
   {
     id: 4,
@@ -94,6 +97,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1750,
     submittedAt: new Date('2023-10-25'),
+    submittedBy: 'student1@example.com',
   },
     {
     id: 5,
@@ -105,6 +109,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1500,
     submittedAt: new Date('2023-01-05'),
+    submittedBy: 'student4@example.com',
   },
   {
     id: 6,
@@ -116,6 +121,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1800,
     submittedAt: new Date('2023-05-30'),
+    submittedBy: 'student2@example.com',
   },
   {
     id: 7,
@@ -127,6 +133,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1100,
     submittedAt: new Date('2023-09-18'),
+    submittedBy: 'student5@example.com',
   },
   {
     id: 8,
@@ -138,6 +145,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1650,
     submittedAt: new Date('2021-12-15'),
+    submittedBy: 'student6@example.com',
   },
   {
     id: 9,
@@ -149,6 +157,7 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 1300,
     submittedAt: new Date('2022-10-20'),
+    submittedBy: 'student3@example.com',
   },
   {
     id: 10,
@@ -160,5 +169,6 @@ export const MOCK_PAPERS: ExamPaper[] = [
     url: '#',
     views: 2100,
     submittedAt: new Date('2023-11-05'),
+    submittedBy: 'student4@example.com',
   },
 ];
